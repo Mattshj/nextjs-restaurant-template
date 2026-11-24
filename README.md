@@ -18,7 +18,7 @@ A modern, reusable website template for restaurants, built with Next.js, React a
 
 ### Prerequisites
 
-- Node.js 20 or later
+- Node.js 24 LTS (pinned in `.nvmrc`; run `nvm use`)
 - pnpm 12, enabled through Corepack (`corepack enable`); the exact version is pinned in `package.json`
 
 ### Install and run

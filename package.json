@@ -23,7 +23,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.9",
-    "@types/node": "^20",
+    "@types/node": "^24.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.3.0",
@@ -37,5 +37,8 @@
     "typescript": "^5",
     "vitest": "^4.1.12"
   },
-  "packageManager": "pnpm@12.23.0"
+  "packageManager": "pnpm@12.23.0",
+  "engines": {
+    "node": ">=24"
+  }
 }
