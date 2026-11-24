@@ -4,7 +4,7 @@ import { cn } from "./utils";
 
 describe("cn", () => {
   it("lets a later class override a conflicting earlier one", () => {
-    expect(cn("px-[1.375rem] py-2", "px-10")).toBe("py-2 px-10");
+    expect(cn("px-5.5 py-2", "px-10")).toBe("py-2 px-10");
   });
 
   it("keeps Hearthwick colour tokens that do not conflict", () => {
