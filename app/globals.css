@@ -97,6 +97,15 @@
   --tracking-heading: -0.03em;
   --tracking-display: -0.04em;
 
+  /* Fluid heading sizes: hero H1 (52–100px) and section H2s (36–52px). */
+  --text-display: clamp(3.25rem, 7vw, 6.25rem);
+  --text-display--line-height: 0.95;
+  --text-section: clamp(2.25rem, 5vw, 3.25rem);
+  --text-section--line-height: 1.05;
+  /* 15px, used for navigation and default buttons. */
+  --text-ui: 0.9375rem;
+  --text-ui--line-height: 1.4;
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -104,6 +113,7 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-inset: 1rem;
   --radius-card: 1.5rem;
   --radius-banner: 2rem;
 }
