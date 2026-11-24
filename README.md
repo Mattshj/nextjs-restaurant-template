@@ -55,7 +55,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the site.
 app/              Routes, root layout and design tokens (globals.css)
 components/ui/    shadcn/ui components, restyled to Hearthwick
 lib/              Shared utilities
-docs/             Architecture notes and the approved design reference
+docs/             Architecture (C4 diagrams) and the approved design reference
 public/           Static assets served as-is
 ```
 
