@@ -4,7 +4,7 @@
 
 Website and booking platform for **Hearthwick**, a fictional multi-location restaurant group: a concept project by MapleCatch Solutions. It is a portfolio piece, so code quality, tests and git history are part of the deliverable.
 
-The long-term goal is real engineering depth: a booking engine that handles many concurrent users, a host dashboard, CRM and analytics. The target architecture is documented in `docs/architecture/c4.md` (issue #2). Today the project has the foundation and the homepage UI, with no backend: booking availability comes from typed mock data.
+The long-term goal is real engineering depth: a booking engine that handles many concurrent users, a host dashboard, CRM and analytics. See [docs/architecture/c4.md](docs/architecture/c4.md) for the target architecture. Today the project has the foundation and the homepage UI, with no backend: booking availability comes from typed mock data.
 
 ## Stack and commands
 
