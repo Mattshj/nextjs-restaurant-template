@@ -19,27 +19,29 @@ A modern, reusable website template for restaurants, built with Next.js, React a
 ### Prerequisites
 
 - Node.js 20 or later
-- npm 10 or later
+- pnpm 12, enabled through Corepack (`corepack enable`); the exact version is pinned in `package.json`
 
 ### Install and run
 
 ```bash
 git clone <repository-url>
 cd restaurant-template
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the site.
 
 ## Scripts
 
-| Command         | What it does                              |
-| --------------- | ----------------------------------------- |
-| `npm run dev`   | Start the development server              |
-| `npm run build` | Create an optimised production build      |
-| `npm run start` | Serve the production build                |
-| `npm run lint`  | Lint the project with ESLint              |
+| Command           | What it does                          |
+| ----------------- | ------------------------------------- |
+| `pnpm dev`        | Start the development server          |
+| `pnpm build`      | Create an optimised production build  |
+| `pnpm start`      | Serve the production build            |
+| `pnpm lint`       | Lint the project with ESLint          |
+| `pnpm test`       | Run the unit tests once with Vitest   |
+| `pnpm test:watch` | Run the unit tests in watch mode      |
 
 ## Project structure
 
