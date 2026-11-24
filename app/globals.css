@@ -1,26 +1,168 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+/*
+ * The site has a single light theme. shadcn components ship `dark:` utilities;
+ * scoping them to a `.dark` ancestor (which is never rendered) stops them from
+ * following the visitor's OS colour scheme.
+ */
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Hearthwick design tokens, following a 60 / 30 / 10 split:
+ * cream backgrounds (60), graphite text and dark surfaces (30), tangerine
+ * accents (10). Brand colours are defined once here; the shadcn semantic
+ * variables map onto them so every component inherits the theme.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --hw-cream: #eae1d3;
+  --hw-cream-light: #f5f0e7;
+  --hw-cream-deep: #dcd1bf;
+  --hw-graphite: #2b2c2f;
+  --hw-graphite-border: #4a4b50;
+  --hw-tangerine: #ff6a14;
+  --hw-muted-on-cream: #5e5a54;
+  --hw-muted-on-graphite: #bdb5a8;
+
+  --background: var(--hw-cream);
+  --foreground: var(--hw-graphite);
+  --card: var(--hw-cream-light);
+  --card-foreground: var(--hw-graphite);
+  --popover: var(--hw-cream-light);
+  --popover-foreground: var(--hw-graphite);
+  /* Text on tangerine is always graphite: white on tangerine is only 2.9:1. */
+  --primary: var(--hw-tangerine);
+  --primary-foreground: var(--hw-graphite);
+  /* Hover states lighten rather than darken, so contrast with graphite text only goes up. */
+  --primary-hover: color-mix(in oklch, var(--hw-tangerine), white 15%);
+  --secondary: var(--hw-graphite);
+  --secondary-foreground: var(--hw-cream);
+  --secondary-hover: color-mix(in oklch, var(--hw-graphite), white 10%);
+  --muted: var(--hw-cream-light);
+  --muted-foreground: var(--hw-muted-on-cream);
+  --accent: var(--hw-cream-deep);
+  --accent-foreground: var(--hw-graphite);
+  /* Not part of the brand palette; reserved for form validation errors (5.2:1 on cream). */
+  --destructive: #b42318;
+  --border: var(--hw-cream-deep);
+  --input: var(--hw-cream-deep);
+  --ring: var(--hw-tangerine);
+  /* Inputs use the base radius; buttons and pills override it to fully rounded. */
+  --radius: 0.875rem;
+
+  /*
+   * Colour of the keyboard focus outline. Tangerine on cream is only 2.2:1,
+   * below the WCAG 3:1 minimum for focus indicators, so light surfaces use
+   * graphite. `surface-dark` switches it to tangerine (4.9:1 on graphite).
+   */
+  --focus-ring: var(--hw-graphite);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand names for places where a semantic token would be misleading,
+     e.g. cream text on a graphite surface. */
+  --color-cream: var(--hw-cream);
+  --color-cream-light: var(--hw-cream-light);
+  --color-cream-deep: var(--hw-cream-deep);
+  --color-graphite: var(--hw-graphite);
+  --color-graphite-border: var(--hw-graphite-border);
+  --color-tangerine: var(--hw-tangerine);
+  --color-muted-on-graphite: var(--hw-muted-on-graphite);
+
+  /* Font variables are set by next/font in app/layout.tsx. */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter-tight), var(--font-inter), sans-serif;
+  --tracking-heading: -0.03em;
+  --tracking-display: -0.04em;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-card: 1.5rem;
+  --radius-banner: 2rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Centred page column: 1280px max, 32px gutters (20px on small screens). */
+@utility page-container {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Graphite section (booking panel, locations band) with matching text and focus colours. */
+@utility surface-dark {
+  background-color: var(--hw-graphite);
+  color: var(--hw-cream);
+  --focus-ring: var(--hw-tangerine);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Biscotti &amp; Tangerine — homepage</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EAE1D3}
+a{color:#2B2C2F}a:hover{color:#000000}
+</style>
+</helmet>
+<div style="background: #EAE1D3; color: #2B2C2F; font-family: Inter, system-ui, sans-serif; min-height: 100vh">
+
+  <header style="max-width: 1280px; margin: 0 auto; padding: 22px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+    <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: 'Inter Tight', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: 0.06em">
+      <span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 4px; background: #2B2C2F"></span>EMBER &amp; OAK
+    </a>
+    <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 28px; font-size: 15px; font-weight: 500">
+      <a href="#" style="text-decoration: none">Menu</a>
+      <a href="#" style="text-decoration: none">Locations</a>
+      <a href="#" style="text-decoration: none">Private dining</a>
+      <a href="#" style="text-decoration: none">Order pickup</a>
+    </nav>
+    <div style="display: flex; gap: 12px; align-items: center">
+      <a href="#" style="text-decoration: none; font-size: 15px; font-weight: 500; padding: 12px 8px">Sign in</a>
+      <a href="#book" style="background: {{accent}}; color: #2B2C2F; text-decoration: none; font-weight: 600; font-size: 15px; padding: 12px 22px; border-radius: 999px">Book a table</a>
+    </div>
+  </header>
+
+  <section style="max-width: 1280px; margin: 0 auto; padding: 48px 32px 72px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+    <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 26px; align-items: flex-start">
+      <span style="display: inline-flex; align-items: center; gap: 8px; background: #F5F0E7; border-radius: 999px; padding: 8px 16px; font-size: 14px; font-weight: 600"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{accent}}"></span>Now taking bookings in all three rooms</span>
+      <h1 style="margin: 0; font-family: 'Inter Tight', sans-serif; font-weight: 800; font-size: clamp(3.25rem, 7vw, 6.25rem); line-height: 0.95; letter-spacing: -0.04em">Fire-cooked.<br>Every plate,<br>on purpose.</h1>
+      <p style="margin: 0; font-size: 19px; line-height: 1.6; color: #5E5A54; max-width: 500px">A wood-fired kitchen with seasonal plates and long tables, across three neighbourhoods. Book in seconds or order ahead for pickup.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
+        <a href="#book" style="background: {{accent}}; color: #2B2C2F; text-decoration: none; font-weight: 600; font-size: 16px; padding: 16px 28px; border-radius: 999px">Book a table</a>
+        <a href="#" style="background: #2B2C2F; color: #EAE1D3; text-decoration: none; font-weight: 600; font-size: 16px; padding: 16px 28px; border-radius: 999px">View the menu</a>
+      </div>
+    </div>
+    <figure style="flex: 1 1 480px; min-width: 0; margin: 0; position: relative; height: 560px; background: #DCD1BF; border-radius: 32px; display: flex; align-items: center; justify-content: center">
+      <figcaption style="font-size: 14px; color: #5E5A54">Photo · signature dish from the hearth</figcaption>
+      <span style="position: absolute; left: 24px; bottom: 24px; background: #F5F0E7; border-radius: 18px; padding: 16px 20px; display: flex; flex-direction: column; gap: 4px">
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5E5A54">Tonight at Downtown</span>
+        <span style="font-weight: 600; font-size: 16px">Tables open from 5:30 pm</span>
+      </span>
+      <span style="position: absolute; right: 24px; top: 24px; width: 104px; height: 104px; border-radius: 50%; background: {{accent}}; color: #2B2C2F; display: flex; align-items: center; justify-content: center; text-align: center; font-family: 'Inter Tight', sans-serif; font-weight: 800; font-size: 15px; line-height: 1.15">New<br>winter<br>menu</span>
+    </figure>
+  </section>
+
+  <section id="book" aria-label="Book a table" style="max-width: 1280px; margin: 0 auto; padding: 0 32px 88px">
+    <div style="background: #2B2C2F; color: #EAE1D3; border-radius: 28px; padding: 32px; display: flex; flex-direction: column; gap: 24px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px">
+        <h2 style="margin: 0; font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 32px; letter-spacing: -0.02em">Reserve your table</h2>
+        <a href="#" style="color: #EAE1D3; font-size: 14px">Larger group? Plan an event →</a>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: end">
+        <label style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 600; color: #BDB5A8">Location
+          <select value="{{loc}}" onChange="{{pickLoc}}" style="font: inherit; font-size: 16px; font-weight: 500; color: #2B2C2F; background: #EAE1D3; border: 0; border-radius: 14px; padding: 14px">
+            <option>Downtown</option><option>Riverside</option><option>Old Town</option>
+          </select>
+        </label>
+        <label style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 600; color: #BDB5A8">Date
+          <input type="date" style="font: inherit; font-size: 16px; font-weight: 500; color: #2B2C2F; background: #EAE1D3; border: 0; border-radius: 14px; padding: 13px">
+        </label>
+        <div style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 8px">
+          <span id="b-guests" style="font-size: 13px; font-weight: 600; color: #BDB5A8">Guests</span>
+          <div role="group" aria-labelledby="b-guests" style="display: flex; align-items: center; justify-content: space-between; background: #EAE1D3; color: #2B2C2F; border-radius: 14px; padding: 4px">
+            <button type="button" onClick="{{less}}" aria-label="Fewer guests" style="width: 44px; height: 44px; border: 0; border-radius: 10px; background: transparent; font: inherit; font-size: 22px; cursor: pointer; color: #2B2C2F">−</button>
+            <span aria-live="polite" style="font-size: 16px; font-weight: 600">{{partyLabel}}</span>
+            <button type="button" onClick="{{more}}" aria-label="More guests" style="width: 44px; height: 44px; border: 0; border-radius: 10px; background: transparent; font: inherit; font-size: 22px; cursor: pointer; color: #2B2C2F">+</button>
+          </div>
+        </div>
+        <button type="button" style="flex: 1 1 200px; height: 52px; border: 0; border-radius: 999px; background: {{accent}}; color: #2B2C2F; font: inherit; font-weight: 700; font-size: 16px; cursor: pointer">Find a table</button>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+        <span style="font-size: 13px; font-weight: 600; color: #BDB5A8; margin-right: 6px">Open at {{loc}}:</span>
+        <sc-for list="{{slots}}" as="t" hint-placeholder-count="7">
+          <button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="height: 44px; padding: 0 18px; border-radius: 999px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; background: {{t.bg}}; color: {{t.fg}}; border: 1px solid {{t.bd}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width: 1280px; margin: 0 auto; padding: 0 32px 88px; display: flex; flex-direction: column; gap: 28px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px">
+      <h2 style="margin: 0; font-family: 'Inter Tight', sans-serif; font-weight: 800; font-size: 52px; letter-spacing: -0.03em">From the hearth</h2>
+      <a href="#" style="font-weight: 600">Full menu &amp; allergens →</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px">
+      <article style="background: #F5F0E7; border-radius: 24px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+        <div style="height: 240px; background: #DCD1BF; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #5E5A54">Photo</div>
+        <div style="padding: 0 8px 8px; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; justify-content: space-between; gap: 12px"><h3 style="margin: 0; font-size: 19px; font-weight: 600">Ember-roasted carrots</h3><span style="font-weight: 600">[PRICE]</span></div>
+          <p style="margin: 0; font-size: 14px; color: #5E5A54">Whipped feta, dukkah, honey</p>
+          <span style="display: flex; gap: 6px"><span style="background: #EAE1D3; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 600">Vegetarian</span><span style="background: #EAE1D3; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 600">Gluten-free</span></span>
+        </div>
+      </article>
+      <article style="background: #F5F0E7; border-radius: 24px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+        <div style="height: 240px; background: #DCD1BF; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #5E5A54">Photo</div>
+        <div style="padding: 0 8px 8px; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; justify-content: space-between; gap: 12px"><h3 style="margin: 0; font-size: 19px; font-weight: 600">Half chicken, fire-roasted</h3><span style="font-weight: 600">[PRICE]</span></div>
+          <p style="margin: 0; font-size: 14px; color: #5E5A54">Charred lemon, salsa verde</p>
+          <span style="display: flex; gap: 6px"><span style="background: #EAE1D3; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 600">Gluten-free</span></span>
+        </div>
+      </article>
+      <article style="background: #F5F0E7; border-radius: 24px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+        <div style="height: 240px; background: #DCD1BF; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #5E5A54">Photo</div>
+        <div style="padding: 0 8px 8px; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; justify-content: space-between; gap: 12px"><h3 style="margin: 0; font-size: 19px; font-weight: 600">Hanger steak</h3><span style="font-weight: 600">[PRICE]</span></div>
+          <p style="margin: 0; font-size: 14px; color: #5E5A54">Bone marrow jus, crispy potatoes</p>
+          <span style="display: flex; gap: 6px"><span style="background: #EAE1D3; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 600">Chef’s pick</span></span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section style="background: #2B2C2F; color: #EAE1D3">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 88px 32px; display: flex; flex-direction: column; gap: 40px">
+      <h2 style="margin: 0; font-family: 'Inter Tight', sans-serif; font-weight: 800; font-size: 52px; letter-spacing: -0.03em">Three rooms, one fire</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px">
+        <article style="border-top: 1px solid #4A4B50; padding-top: 24px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 15px; color: {{accent}}">01</span>
+          <h3 style="margin: 0; font-size: 26px; font-weight: 600">Downtown</h3>
+          <p style="margin: 0; color: #BDB5A8; line-height: 1.6">Chef’s counter and a late kitchen on weekends.<br>[ADDRESS]</p>
+          <a href="#" style="color: #EAE1D3; font-weight: 600">Book Downtown →</a>
+        </article>
+        <article style="border-top: 1px solid #4A4B50; padding-top: 24px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 15px; color: {{accent}}">02</span>
+          <h3 style="margin: 0; font-size: 26px; font-weight: 600">Riverside</h3>
+          <p style="margin: 0; color: #BDB5A8; line-height: 1.6">Patio by the water and weekend brunch.<br>[ADDRESS]</p>
+          <a href="#" style="color: #EAE1D3; font-weight: 600">Book Riverside →</a>
+        </article>
+        <article style="border-top: 1px solid #4A4B50; padding-top: 24px; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 15px; color: {{accent}}">03</span>
+          <h3 style="margin: 0; font-size: 26px; font-weight: 600">Old Town</h3>
+          <p style="margin: 0; color: #BDB5A8; line-height: 1.6">The original room, with private dining for groups.<br>[ADDRESS]</p>
+          <a href="#" style="color: #EAE1D3; font-weight: 600">Book Old Town →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width: 1280px; margin: 0 auto; padding: 88px 32px">
+    <div style="background: {{accent}}; color: #2B2C2F; border-radius: 32px; padding: 56px 48px; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between">
+      <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+        <h2 style="margin: 0; font-family: 'Inter Tight', sans-serif; font-weight: 800; font-size: 48px; letter-spacing: -0.03em; line-height: 1">Private dining &amp; events</h2>
+        <p style="margin: 0; font-size: 18px; line-height: 1.6">Share your date, group size and budget, and we’ll send a proposal with menus.</p>
+      </div>
+      <a href="#" style="background: #2B2C2F; color: #EAE1D3; text-decoration: none; font-weight: 600; padding: 16px 28px; border-radius: 999px">Start an enquiry</a>
+    </div>
+  </section>
+
+  <footer style="max-width: 1280px; margin: 0 auto; padding: 0 32px 48px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 14px; color: #5E5A54">
+    <span>Ember &amp; Oak · a concept project by MapleCatch Solutions</span>
+    <span style="display: flex; gap: 24px"><a href="#">Careers</a><a href="#">Gift cards</a><a href="#">Accessibility</a></span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FF6A14","options":["#FF6A14","#F28C3A","#E2673A","#FF8A3D"]},"$preview":{"width":1440,"height":2500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var accent = this.props.accent ?? '#FF6A14';
+    var s = this.state || {};
+    var party = s.party ?? 2;
+    var slot = s.slot ?? '7:00 pm';
+    var loc = s.loc ?? 'Downtown';
+    var self = this;
+    var slots = ['5:30 pm', '6:00 pm', '6:45 pm', '7:00 pm', '7:30 pm', '8:15 pm', '9:00 pm'].map(function (t) {
+      var yes = slot === t;
+      return {
+        label: t, on: yes,
+        bg: yes ? accent : 'transparent',
+        fg: yes ? '#2B2C2F' : '#EAE1D3',
+        bd: yes ? accent : '#5E5F64',
+        pick: function () { self.setState({ slot: t }); }
+      };
+    });
+    return {
+      accent: accent,
+      loc: loc,
+      slots: slots,
+      partyLabel: party + (party === 1 ? ' guest' : ' guests'),
+      less: function () { self.setState({ party: Math.max(1, party - 1) }); },
+      more: function () { self.setState({ party: Math.min(12, party + 1) }); },
+      pickLoc: function (e) { self.setState({ loc: e.target.value }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
