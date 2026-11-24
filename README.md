@@ -38,16 +38,17 @@ Open [http://localhost:3000](http://localhost:3000) to see the site.
 
 ## Scripts
 
-| Command             | What it does                         |
-| ------------------- | ------------------------------------ |
-| `pnpm dev`          | Start the development server         |
-| `pnpm build`        | Create an optimised production build |
-| `pnpm start`        | Serve the production build           |
-| `pnpm lint`         | Lint the project with ESLint         |
-| `pnpm format`       | Format all files with Prettier       |
-| `pnpm format:check` | Check formatting without writing     |
-| `pnpm test`         | Run the unit tests once with Vitest  |
-| `pnpm test:watch`   | Run the unit tests in watch mode     |
+| Command             | What it does                                                                                                                        |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm dev`          | Start the development server                                                                                                        |
+| `pnpm build`        | Create an optimised production build                                                                                                |
+| `pnpm start`        | Serve the production build                                                                                                          |
+| `pnpm lint`         | Lint the project with ESLint                                                                                                        |
+| `pnpm format`       | Format all files with Prettier                                                                                                      |
+| `pnpm format:check` | Check formatting without writing                                                                                                    |
+| `pnpm test`         | Run the unit tests once with Vitest                                                                                                 |
+| `pnpm test:watch`   | Run the unit tests in watch mode                                                                                                    |
+| `pnpm test:e2e`     | Run Playwright smoke tests against a production build (run `pnpm build` first; first time: `pnpm exec playwright install chromium`) |
 
 ## Project structure
 

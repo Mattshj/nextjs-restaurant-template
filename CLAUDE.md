@@ -20,6 +20,7 @@ The long-term goal is real engineering depth: a booking engine that handles many
 | Format     | `pnpm format` / `pnpm format:check` |
 | Typecheck  | `pnpm exec tsc --noEmit`            |
 | Unit tests | `pnpm test`                         |
+| E2E tests  | `pnpm build && pnpm test:e2e`       |
 | Build      | `pnpm build`                        |
 
 Run lint, typecheck, tests and format check before every commit.
