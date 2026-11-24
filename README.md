@@ -6,13 +6,13 @@ A modern, reusable website template for restaurants, built with Next.js, React a
 
 ## Tech stack
 
-| Area      | Choice                                                                                             |
-| --------- | -------------------------------------------------------------------------------------------------- |
-| Framework | [Next.js 16](https://nextjs.org) (App Router, Cache Components, Partial Prefetching)              |
-| UI        | [React 19](https://react.dev)                                                                      |
-| Language  | [TypeScript](https://www.typescriptlang.org) in strict mode                                        |
-| Styling   | [Tailwind CSS v4](https://tailwindcss.com) with CSS-first design tokens                            |
-| Linting   | [ESLint](https://eslint.org) with the Next.js Core Web Vitals and TypeScript configs               |
+| Area      | Choice                                                                               |
+| --------- | ------------------------------------------------------------------------------------ |
+| Framework | [Next.js 16](https://nextjs.org) (App Router, Cache Components, Partial Prefetching) |
+| UI        | [React 19](https://react.dev)                                                        |
+| Language  | [TypeScript](https://www.typescriptlang.org) in strict mode                          |
+| Styling   | [Tailwind CSS v4](https://tailwindcss.com) with CSS-first design tokens              |
+| Linting   | [ESLint](https://eslint.org) with the Next.js Core Web Vitals and TypeScript configs |
 
 ## Getting started
 
@@ -34,14 +34,16 @@ Open [http://localhost:3000](http://localhost:3000) to see the site.
 
 ## Scripts
 
-| Command           | What it does                          |
-| ----------------- | ------------------------------------- |
-| `pnpm dev`        | Start the development server          |
-| `pnpm build`      | Create an optimised production build  |
-| `pnpm start`      | Serve the production build            |
-| `pnpm lint`       | Lint the project with ESLint          |
-| `pnpm test`       | Run the unit tests once with Vitest   |
-| `pnpm test:watch` | Run the unit tests in watch mode      |
+| Command             | What it does                         |
+| ------------------- | ------------------------------------ |
+| `pnpm dev`          | Start the development server         |
+| `pnpm build`        | Create an optimised production build |
+| `pnpm start`        | Serve the production build           |
+| `pnpm lint`         | Lint the project with ESLint         |
+| `pnpm format`       | Format all files with Prettier       |
+| `pnpm format:check` | Check formatting without writing     |
+| `pnpm test`         | Run the unit tests once with Vitest  |
+| `pnpm test:watch`   | Run the unit tests in watch mode     |
 
 ## Project structure
 
