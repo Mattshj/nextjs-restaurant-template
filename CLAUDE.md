@@ -80,7 +80,7 @@ The approved homepage design is [docs/design-reference/homepage-design-reference
 
 ## Components
 
-- shadcn/ui is the base. Add a component with `pnpm dlx shadcn@<version> add <name>` only when a section needs it, then restyle it to the tokens and change its `cn` import to `@/lib/utils`.
+- shadcn/ui is the base. Add a component with `pnpm shadcn add <name>` (uses the locked version) only when a section needs it, then restyle it to the tokens and change its `cn` import to `@/lib/utils`.
 - Button variants: `primary` (default), `secondary`, `outline`, `ghost`. Badge variants: `default`, `subtle` (inside cards), `primary`, `secondary`.
 - Build custom only where shadcn has no fit: `GuestStepper`, `SectionHeader`, `SiteHeader`, `SiteFooter`.
 
