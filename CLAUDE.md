@@ -34,6 +34,7 @@ components/          Shared layout pieces (SiteHeader, SiteFooter, SectionHeader
 features/<feature>/  Feature compositions, e.g. features/booking, features/home
 lib/                 Utilities (cn), shared types and static content
 lib/mock/            Typed mock data behind interfaces that a real API replaces later
+lib/availability.ts  The one place that picks the availability service (mock today)
 e2e/                 Playwright tests
 docs/                Architecture (C4) and the approved design reference
 ```
@@ -82,7 +83,7 @@ The approved homepage design is [docs/design-reference/homepage-design-reference
 ## Components
 
 - shadcn/ui is the base. Add a component with `pnpm shadcn add <name>` (uses the locked version) only when a section needs it, then restyle it to the tokens and change its `cn` import to `@/lib/utils`.
-- Button variants: `primary` (default), `secondary`, `outline`, `ghost`. Badge variants: `default`, `subtle` (inside cards), `primary`, `secondary`.
+- Button variants: `primary` (default), `secondary`, `outline`, `ghost`. Badge variants: `default`, `subtle` (inside cards), `primary`, `secondary`. Toggle-group variants: `default` (cream surfaces), `dark` (inside `surface-dark`).
 - Build custom only where shadcn has no fit: `GuestStepper`, `SectionHeader`, `SiteHeader`, `SiteFooter`.
 
 ## Conventions
@@ -91,5 +92,6 @@ The approved homepage design is [docs/design-reference/homepage-design-reference
 - Accessibility: semantic HTML, a label on every input, visible focus, full keyboard support, WCAG AA contrast, `prefers-reduced-motion` respected.
 - Responsive and mobile-first; check at 375px, 768px and 1440px.
 - **Don't invent content.** Keep `[PRICE]`, `[ADDRESS]` and photo placeholders until real content is provided. No real people's names, photos, phone numbers or addresses.
-- Mock data lives in `lib/mock/` behind a typed interface, so swapping in the real API changes one module, not the UI.
+- Mock data lives in `lib/mock/` behind a typed interface (`AvailabilityService` in `lib/types.ts`), so swapping in the real API changes `lib/availability.ts`, not the UI. Booking rules (party size, booking window, hold length) live in `lib/booking.ts`.
+- State that belongs in the URL (e.g. the booking location, `?location=`) is read with `useSearchParams` inside `<Suspense>`, so the rest of the page stays prerendered.
 - Tests are colocated as `*.test.ts(x)` and query by role, label or text.

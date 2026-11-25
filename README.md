@@ -55,7 +55,11 @@ Open [http://localhost:3000](http://localhost:3000) to see the site.
 ```text
 app/              Routes, root layout and design tokens (globals.css)
 components/ui/    shadcn/ui components, restyled to Hearthwick
-lib/              Shared utilities
+components/       Shared layout pieces (header, footer, section header)
+features/         Feature code: home sections, booking panel
+lib/              Types, content, booking rules and utilities
+lib/mock/         Mock availability service (replaced by the real API later)
+e2e/              Playwright smoke tests
 docs/             Architecture (C4 diagrams) and the approved design reference
 public/           Static assets served as-is
 ```
