@@ -1,7 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import Home from "./page";
+
+// Outside the Next.js router, useSearchParams has no URL to read.
+vi.mock("next/navigation", () => ({
+  useSearchParams: () => new URLSearchParams(),
+}));
 
 describe("Home page", () => {
   it("renders a main landmark with a single top-level heading", () => {

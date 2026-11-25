@@ -28,3 +28,42 @@ export type NavLink = {
   label: string;
   href: string;
 };
+
+/** A guest's search for open tables. */
+export type AvailabilityRequest = {
+  locationId: LocationId;
+  /** Calendar date in local time, as `YYYY-MM-DD`. */
+  date: string;
+  partySize: number;
+};
+
+/** A bookable start time. */
+export type TimeSlot = {
+  /** Local start time in 24-hour `HH:mm` format, e.g. `"19:00"`. */
+  time: string;
+};
+
+/** A request to hold one slot while the guest completes the booking. */
+export type HoldRequest = AvailabilityRequest & {
+  /** Start time in `HH:mm`, taken from a {@link TimeSlot}. */
+  time: string;
+};
+
+/** A table reserved for a short time so no one else can take it mid-booking. */
+export type TableHold = {
+  id: string;
+  request: HoldRequest;
+  expiresAt: Date;
+};
+
+/**
+ * Source of table availability. The booking UI depends only on this type,
+ * so the mock in `lib/mock/` can be replaced by real API calls without
+ * changing any component.
+ */
+export type AvailabilityService = {
+  /** Open start times for the request, earliest first. Empty when fully booked. */
+  getAvailability(request: AvailabilityRequest): Promise<TimeSlot[]>;
+  /** Holds a table for `HOLD_MINUTES` (lib/booking.ts); rejects if the slot is gone. */
+  holdTable(request: HoldRequest): Promise<TableHold>;
+};
