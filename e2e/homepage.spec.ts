@@ -16,6 +16,7 @@ test.describe("homepage", () => {
       .getByRole("heading", { level: 2 })
       .allTextContents();
     expect(sectionTitles).toEqual([
+      "Reserve your table",
       "From the hearth",
       "Three rooms, one fire",
       "Private dining & events",
