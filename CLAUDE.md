@@ -95,3 +95,4 @@ The approved homepage design is [docs/design-reference/homepage-design-reference
 - Mock data lives in `lib/mock/` behind a typed interface (`AvailabilityService` in `lib/types.ts`), so swapping in the real API changes `lib/availability.ts`, not the UI. Booking rules (party size, booking window, hold length) live in `lib/booking.ts`.
 - State that belongs in the URL (e.g. the booking location, `?location=`) is read with `useSearchParams` inside `<Suspense>`, so the rest of the page stays prerendered.
 - Tests are colocated as `*.test.ts(x)` and query by role, label or text.
+- SEO: every route exports `metadata` (title, description, canonical); add new routes to `app/sitemap.ts`. Absolute URLs come from `SITE_URL` via `lib/seo.ts`. Structured data never contains placeholder content such as `[ADDRESS]`: omit the field until real data exists.

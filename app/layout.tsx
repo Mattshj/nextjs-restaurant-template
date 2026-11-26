@@ -3,6 +3,13 @@ import { Inter, Inter_Tight } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Toaster } from "@/components/ui/sonner";
+import { siteName } from "@/lib/data/site";
+import {
+  defaultTitle,
+  getSiteUrl,
+  openGraphDefaults,
+  siteDescription,
+} from "@/lib/seo";
 
 import "./globals.css";
 
@@ -18,10 +25,19 @@ const interTight = Inter_Tight({
   subsets: ["latin"],
 });
 
+// Defaults for every route. Pages set their own title and canonical URL;
+// relative URLs resolve against `metadataBase`.
 export const metadata: Metadata = {
-  title: "Hearthwick — Fire-cooked restaurants",
-  description:
-    "A wood-fired kitchen with seasonal plates and long tables, across three neighbourhoods. Book a table or order ahead for pickup.",
+  metadataBase: getSiteUrl(),
+  title: { default: defaultTitle, template: `%s · ${siteName}` },
+  description: siteDescription,
+  applicationName: siteName,
+  openGraph: openGraphDefaults,
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: siteDescription,
+  },
 };
 
 /**
