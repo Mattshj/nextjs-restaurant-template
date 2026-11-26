@@ -36,6 +36,14 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) to see the site.
 
+### Environment
+
+Copy `.env.example` to `.env.local` for local overrides. In every deployed environment, set:
+
+| Variable   | Purpose                                                                                                                           |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `SITE_URL` | Public base URL, used for canonical links, Open Graph URLs, the sitemap and structured data. Defaults to `http://localhost:3000`. |
+
 ## Scripts
 
 | Command             | What it does                                                                                                                        |
