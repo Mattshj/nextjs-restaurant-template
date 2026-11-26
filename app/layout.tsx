@@ -4,7 +4,12 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Toaster } from "@/components/ui/sonner";
 import { siteName } from "@/lib/data/site";
-import { getSiteUrl, siteDescription } from "@/lib/seo";
+import {
+  defaultTitle,
+  getSiteUrl,
+  openGraphDefaults,
+  siteDescription,
+} from "@/lib/seo";
 
 import "./globals.css";
 
@@ -20,8 +25,6 @@ const interTight = Inter_Tight({
   subsets: ["latin"],
 });
 
-const defaultTitle = `${siteName} — Fire-cooked restaurants`;
-
 // Defaults for every route. Pages set their own title and canonical URL;
 // relative URLs resolve against `metadataBase`.
 export const metadata: Metadata = {
@@ -29,13 +32,7 @@ export const metadata: Metadata = {
   title: { default: defaultTitle, template: `%s · ${siteName}` },
   description: siteDescription,
   applicationName: siteName,
-  openGraph: {
-    type: "website",
-    siteName,
-    title: defaultTitle,
-    description: siteDescription,
-    locale: "en",
-  },
+  openGraph: openGraphDefaults,
   twitter: {
     card: "summary_large_image",
     title: defaultTitle,

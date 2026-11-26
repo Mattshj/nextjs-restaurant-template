@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { locations } from "@/lib/data/locations";
 import { siteName } from "@/lib/data/site";
 
@@ -6,6 +8,21 @@ const LOCAL_SITE_URL = "http://localhost:3000";
 /** Shared description for search results and social cards. */
 export const siteDescription =
   "A wood-fired kitchen with seasonal plates and long tables, across three neighbourhoods. Book a table or order ahead for pickup.";
+
+export const defaultTitle = `${siteName} — Fire-cooked restaurants`;
+
+/**
+ * Open Graph fields shared by every page. Next.js merges metadata only at
+ * the top level, so a page that sets `openGraph` replaces the layout's
+ * object entirely; spread these in to keep them.
+ */
+export const openGraphDefaults = {
+  type: "website",
+  siteName,
+  title: defaultTitle,
+  description: siteDescription,
+  locale: "en",
+} satisfies Metadata["openGraph"];
 
 /**
  * Public base URL of the site, used for canonical links, Open Graph URLs,

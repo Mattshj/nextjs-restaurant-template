@@ -5,11 +5,15 @@ import { Hero } from "@/features/home/hero";
 import { LocationsBand } from "@/features/home/locations-band";
 import { PrivateDiningBanner } from "@/features/home/private-dining-banner";
 import { SignatureDishes } from "@/features/home/signature-dishes";
-import { buildRestaurantJsonLd, serializeJsonLd } from "@/lib/seo";
+import {
+  buildRestaurantJsonLd,
+  openGraphDefaults,
+  serializeJsonLd,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  openGraph: { url: "/" },
+  openGraph: { ...openGraphDefaults, url: "/" },
 };
 
 /** Homepage: composes the marketing sections in design order, plus structured data for search engines. */

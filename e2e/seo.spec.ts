@@ -18,6 +18,14 @@ test.describe("search and sharing metadata", () => {
       "href",
       /^https?:\/\//,
     );
+    await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute(
+      "content",
+      "Hearthwick",
+    );
+    await expect(page.locator('meta[property="og:type"]')).toHaveAttribute(
+      "content",
+      "website",
+    );
     const ogImage = await page
       .locator('meta[property="og:image"]')
       .getAttribute("content");
