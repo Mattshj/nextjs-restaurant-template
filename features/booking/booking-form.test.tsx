@@ -1,10 +1,17 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { toast } from "sonner";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Toaster } from "@/components/ui/sonner";
 import { createMockAvailabilityService } from "@/lib/mock/availability";
-import type { AvailabilityService, LocationId, TimeSlot } from "@/lib/types";
+import type {
+  AvailabilityService,
+  HoldRequest,
+  LocationId,
+  TableHold,
+  TimeSlot,
+} from "@/lib/types";
 
 import { BookingForm } from "./booking-form";
 
@@ -16,6 +23,9 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.useRealTimers();
+  // Sonner keeps toasts in a module-level store; clear it so a new
+  // <Toaster> doesn't show toasts from earlier tests.
+  toast.dismiss();
 });
 
 function renderForm({
@@ -120,6 +130,7 @@ describe("BookingForm", () => {
     const service: AvailabilityService = {
       getAvailability: () => Promise.reject(new Error("Network down")),
       holdTable: () => Promise.reject(new Error("unused")),
+      releaseHold: () => Promise.resolve(),
     };
     const { user } = renderForm({ service });
 
@@ -137,6 +148,7 @@ describe("BookingForm", () => {
     const service: AvailabilityService = {
       getAvailability: () => responses[call++].promise,
       holdTable: () => Promise.reject(new Error("unused")),
+      releaseHold: () => Promise.resolve(),
     };
     const { user } = renderForm({ service });
     await pickDate(user, /November 27/);
@@ -163,5 +175,113 @@ describe("BookingForm", () => {
     await user.click(await screen.findByRole("option", { name: "Old Town" }));
 
     expect(onLocationChange).toHaveBeenCalledWith("old-town");
+  });
+
+  describe("table holds", () => {
+    async function showTimes(user: ReturnType<typeof userEvent.setup>) {
+      await pickDate(user, /November 27/);
+      await user.click(screen.getByRole("button", { name: "Find a table" }));
+      return within(await screen.findByRole("radiogroup")).getAllByRole(
+        "radio",
+      );
+    }
+
+    function spiedService() {
+      const service = createMockAvailabilityService({ delayMs: 0 });
+      return {
+        service,
+        holdTable: vi.spyOn(service, "holdTable"),
+        releaseHold: vi.spyOn(service, "releaseHold"),
+      };
+    }
+
+    it("releases the previous table when the guest picks another time", async () => {
+      const { service, holdTable, releaseHold } = spiedService();
+      const { user } = renderForm({ service });
+      const [first, second] = await showTimes(user);
+
+      await user.click(first);
+      await screen.findByText("Table held for 10 minutes");
+      const firstHold = await holdTable.mock.results[0].value;
+      await user.click(second);
+
+      await waitFor(() =>
+        expect(releaseHold).toHaveBeenCalledWith(firstHold.id),
+      );
+      expect(second).toBeChecked();
+    });
+
+    it("releases the table when the party size changes", async () => {
+      const { service, holdTable, releaseHold } = spiedService();
+      const { user } = renderForm({ service });
+      const [first] = await showTimes(user);
+      await user.click(first);
+      await screen.findByText("Table held for 10 minutes");
+      const hold = await holdTable.mock.results[0].value;
+
+      await user.click(screen.getByRole("button", { name: "More guests" }));
+
+      expect(releaseHold).toHaveBeenCalledWith(hold.id);
+    });
+
+    it("asks for a new search after the inputs change, even if changed back", async () => {
+      const { service } = spiedService();
+      const { user } = renderForm({ service });
+      const [first] = await showTimes(user);
+      await user.click(first);
+      await screen.findByText("Table held for 10 minutes");
+
+      await user.click(screen.getByRole("button", { name: "More guests" }));
+      await user.click(screen.getByRole("button", { name: "Fewer guests" }));
+
+      // The old hold was released, so its time must not reappear as chosen.
+      expect(screen.queryByRole("radiogroup")).not.toBeInTheDocument();
+      expect(
+        screen.getByText("Pick a date and party size, then find a table."),
+      ).toBeInTheDocument();
+    });
+
+    it("releases a hold that arrives after a newer choice", async () => {
+      const pending = new Map<string, ReturnType<typeof deferred<TableHold>>>();
+      const releaseHold = vi.fn(() => Promise.resolve());
+      const service: AvailabilityService = {
+        getAvailability: () =>
+          Promise.resolve([{ time: "18:00" }, { time: "19:00" }]),
+        holdTable: (request: HoldRequest) => {
+          const response = deferred<TableHold>();
+          pending.set(request.time, response);
+          return response.promise;
+        },
+        releaseHold,
+      };
+      const holdFor = (request: HoldRequest, id: string): TableHold => ({
+        id,
+        request,
+        expiresAt: new Date(2026, 10, 25, 12, 10),
+      });
+      const { user } = renderForm({ service });
+      const [sixPm, sevenPm] = await showTimes(user);
+
+      await user.click(sixPm);
+      await user.click(sevenPm);
+      const request = {
+        locationId: "riverside",
+        date: "2026-11-27",
+        partySize: 2,
+      } as const;
+      pending
+        .get("19:00")
+        ?.resolve(holdFor({ ...request, time: "19:00" }, "late-pick"));
+      await screen.findByText(/7:00 pm · 2 guests/);
+      pending
+        .get("18:00")
+        ?.resolve(holdFor({ ...request, time: "18:00" }, "early-pick"));
+
+      await waitFor(() =>
+        expect(releaseHold).toHaveBeenCalledWith("early-pick"),
+      );
+      expect(releaseHold).not.toHaveBeenCalledWith("late-pick");
+      expect(screen.getAllByText("Table held for 10 minutes")).toHaveLength(1);
+    });
   });
 });
