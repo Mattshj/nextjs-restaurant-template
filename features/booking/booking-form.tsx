@@ -99,6 +99,18 @@ export function BookingForm({
   const request: AvailabilityRequest | null = date
     ? { locationId, date: toIsoDate(date), partySize }
     : null;
+
+  // When location, date or party size changes, the old results and chosen
+  // time no longer apply, even if the guest later changes back. Reset during
+  // render (React's "adjust state on prop change" pattern) because the
+  // location arrives as a prop from the URL.
+  const inputsKey = `${locationId}|${request?.date ?? ""}|${partySize}`;
+  const [resultsKey, setResultsKey] = useState(inputsKey);
+  if (inputsKey !== resultsKey) {
+    setResultsKey(inputsKey);
+    setSearch({ status: "idle" });
+    setSelectedTime("");
+  }
   const result =
     search.status !== "idle" &&
     request &&

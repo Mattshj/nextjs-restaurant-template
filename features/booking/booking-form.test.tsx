@@ -224,6 +224,23 @@ describe("BookingForm", () => {
       expect(releaseHold).toHaveBeenCalledWith(hold.id);
     });
 
+    it("asks for a new search after the inputs change, even if changed back", async () => {
+      const { service } = spiedService();
+      const { user } = renderForm({ service });
+      const [first] = await showTimes(user);
+      await user.click(first);
+      await screen.findByText("Table held for 10 minutes");
+
+      await user.click(screen.getByRole("button", { name: "More guests" }));
+      await user.click(screen.getByRole("button", { name: "Fewer guests" }));
+
+      // The old hold was released, so its time must not reappear as chosen.
+      expect(screen.queryByRole("radiogroup")).not.toBeInTheDocument();
+      expect(
+        screen.getByText("Pick a date and party size, then find a table."),
+      ).toBeInTheDocument();
+    });
+
     it("releases a hold that arrives after a newer choice", async () => {
       const pending = new Map<string, ReturnType<typeof deferred<TableHold>>>();
       const releaseHold = vi.fn(() => Promise.resolve());
