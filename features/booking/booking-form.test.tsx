@@ -120,6 +120,7 @@ describe("BookingForm", () => {
     const service: AvailabilityService = {
       getAvailability: () => Promise.reject(new Error("Network down")),
       holdTable: () => Promise.reject(new Error("unused")),
+      releaseHold: () => Promise.resolve(),
     };
     const { user } = renderForm({ service });
 
@@ -137,6 +138,7 @@ describe("BookingForm", () => {
     const service: AvailabilityService = {
       getAvailability: () => responses[call++].promise,
       holdTable: () => Promise.reject(new Error("unused")),
+      releaseHold: () => Promise.resolve(),
     };
     const { user } = renderForm({ service });
     await pickDate(user, /November 27/);

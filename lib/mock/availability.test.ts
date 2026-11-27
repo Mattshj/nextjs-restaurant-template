@@ -99,4 +99,64 @@ describe("mock availability service", () => {
       service.holdTable({ ...tomorrowForTwo, time: "23:45" }),
     ).rejects.toThrow(SlotUnavailableError);
   });
+
+  describe("holds", () => {
+    async function firstOpenSlot(service = serviceAt(noon)) {
+      const [slot] = await service.getAvailability(tomorrowForTwo);
+      return { ...tomorrowForTwo, time: slot.time };
+    }
+
+    it("won't hold a table that another hold already has", async () => {
+      const service = serviceAt(noon);
+      const slot = await firstOpenSlot(service);
+      await service.holdTable(slot);
+
+      await expect(
+        service.holdTable({ ...slot, partySize: 4 }),
+      ).rejects.toThrow(SlotUnavailableError);
+    });
+
+    it("frees the table when the hold is released", async () => {
+      const service = serviceAt(noon);
+      const slot = await firstOpenSlot(service);
+      const hold = await service.holdTable(slot);
+
+      await service.releaseHold(hold.id);
+
+      await expect(service.holdTable(slot)).resolves.toMatchObject({
+        request: slot,
+      });
+    });
+
+    it("frees the table once the hold expires", async () => {
+      let clock = noon;
+      const service = createMockAvailabilityService({
+        now: () => clock,
+        delayMs: 0,
+      });
+      const slot = await firstOpenSlot(service);
+      await service.holdTable(slot);
+
+      clock = new Date(2026, 10, 25, 12, 10); // exactly 10 minutes later
+
+      await expect(service.holdTable(slot)).resolves.toBeDefined();
+    });
+
+    it("gives every hold its own id", async () => {
+      const service = serviceAt(noon);
+      const slot = await firstOpenSlot(service);
+      const first = await service.holdTable(slot);
+      await service.releaseHold(first.id);
+
+      const second = await service.holdTable(slot);
+
+      expect(second.id).not.toBe(first.id);
+    });
+
+    it("treats releasing an unknown hold as a no-op", async () => {
+      await expect(
+        serviceAt(noon).releaseHold("hold-missing"),
+      ).resolves.toBeUndefined();
+    });
+  });
 });

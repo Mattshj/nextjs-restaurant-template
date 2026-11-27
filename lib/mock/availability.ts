@@ -46,6 +46,10 @@ type MockAvailabilityOptions = {
  *   request. Larger parties lose more slots, as big tables sell out first.
  * - Same-day slots need {@link SAME_DAY_LEAD_MINUTES} minutes' notice.
  * - Old Town is closed on Mondays, so the fully booked state can be demoed.
+ * - Each slot has one table. While a hold on it is active (not released and
+ *   not expired), holding the same slot again fails, as it would for a
+ *   second guest. Availability doesn't hide held slots; the clash is
+ *   reported when holding, like a real race between two guests.
  *
  * Times are in the browser's timezone; the real service will use each
  * location's timezone.
@@ -54,6 +58,9 @@ export function createMockAvailabilityService({
   now = () => new Date(),
   delayMs = 300,
 }: MockAvailabilityOptions = {}): AvailabilityService {
+  const activeHolds = new Map<string, TableHold>();
+  let holdCount = 0;
+
   async function getAvailability(
     request: AvailabilityRequest,
   ): Promise<TimeSlot[]> {
@@ -67,17 +74,45 @@ export function createMockAvailabilityService({
     await wait(delayMs);
     const current = now();
     assertValidRequest(request, toIsoDate(current));
-    if (!openTimes(request, current).includes(request.time)) {
+    if (
+      !openTimes(request, current).includes(request.time) ||
+      isHeld(request, current)
+    ) {
       throw new SlotUnavailableError("That time is no longer available.");
     }
-    return {
-      id: `hold-${request.locationId}-${request.date}-${request.time}-${request.partySize}`,
+
+    const hold: TableHold = {
+      id: `hold-${++holdCount}`,
       request,
       expiresAt: new Date(current.getTime() + HOLD_MINUTES * 60_000),
     };
+    activeHolds.set(hold.id, hold);
+    return hold;
   }
 
-  return { getAvailability, holdTable };
+  async function releaseHold(holdId: string): Promise<void> {
+    await wait(delayMs);
+    activeHolds.delete(holdId);
+  }
+
+  function isHeld(request: HoldRequest, current: Date) {
+    for (const [id, hold] of activeHolds) {
+      if (hold.expiresAt <= current) {
+        activeHolds.delete(id);
+      } else if (isSameSlot(hold.request, request)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  return { getAvailability, holdTable, releaseHold };
+}
+
+function isSameSlot(a: HoldRequest, b: HoldRequest) {
+  return (
+    a.locationId === b.locationId && a.date === b.date && a.time === b.time
+  );
 }
 
 function openTimes(request: AvailabilityRequest, now: Date): string[] {

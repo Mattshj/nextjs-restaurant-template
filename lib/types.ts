@@ -66,4 +66,9 @@ export type AvailabilityService = {
   getAvailability(request: AvailabilityRequest): Promise<TimeSlot[]>;
   /** Holds a table for `HOLD_MINUTES` (lib/booking.ts); rejects if the slot is gone. */
   holdTable(request: HoldRequest): Promise<TableHold>;
+  /**
+   * Gives a held table back before its hold expires, e.g. when the guest
+   * picks another time. Releasing an unknown or expired hold is a no-op.
+   */
+  releaseHold(holdId: string): Promise<void>;
 };
