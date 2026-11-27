@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { addDays, format, startOfToday } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -44,6 +44,7 @@ import type {
 } from "@/lib/types";
 
 import { GuestStepper } from "./guest-stepper";
+import { useTableHold } from "./use-table-hold";
 
 type SearchState =
   | { status: "idle" }
@@ -66,8 +67,9 @@ const labelClass = "text-sm font-semibold text-muted-on-graphite";
  * Choosing a time holds the table and confirms with a toast.
  *
  * Results belong to the request that produced them. When any input changes,
- * they are hidden rather than shown for the wrong search, and responses to
- * superseded searches are ignored.
+ * they are hidden rather than shown for the wrong search, responses to
+ * superseded searches are ignored, and any table held for the old search is
+ * released.
  */
 export function BookingForm({
   locationId,
@@ -82,6 +84,7 @@ export function BookingForm({
   const [selectedTime, setSelectedTime] = useState("");
   const latestSearchId = useRef(0);
   const dateButtonRef = useRef<HTMLButtonElement>(null);
+  const tableHold = useTableHold(service);
 
   const ids = {
     location: useId(),
@@ -104,6 +107,14 @@ export function BookingForm({
       : null;
 
   const hasSlots = result?.status === "done" && result.slots.length > 0;
+  const { release: releaseHold } = tableHold;
+
+  // Once location, date or party size changes, the held table no longer
+  // matches what the guest is looking for.
+  const showingResults = result !== null;
+  useEffect(() => {
+    if (!showingResults) releaseHold();
+  }, [showingResults, releaseHold]);
 
   async function findTables(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -114,6 +125,7 @@ export function BookingForm({
     }
 
     const searchId = ++latestSearchId.current;
+    tableHold.release();
     setSelectedTime("");
     setSearch({ status: "loading", request });
     try {
@@ -134,7 +146,8 @@ export function BookingForm({
 
     setSelectedTime(time);
     try {
-      const hold = await service.holdTable({ ...result.request, time });
+      const hold = await tableHold.hold({ ...result.request, time });
+      if (!hold) return; // superseded by a newer choice
       toast.success(`Table held for ${HOLD_MINUTES} minutes`, {
         description: describeHold(location.name, hold.request),
       });
